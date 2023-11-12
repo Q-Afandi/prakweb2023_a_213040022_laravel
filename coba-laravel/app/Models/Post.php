@@ -12,6 +12,8 @@ class Post extends Model
     protected $fillable = ['title', 'excerpt', 'body']; //ini boleh diisi sisanya gaboleh
 
      protected $guarded = ['id']; //ini yang gaboleh sisanya boleh
+     protected $with = ['category', 'author'];
+       // with() adalah penggunaan eager loading supaya mengefesiensikan query
 
      public function category()
     {
