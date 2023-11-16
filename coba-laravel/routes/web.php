@@ -66,3 +66,5 @@ Route::get('/register', [RegisterController::class, 'index']);
 //         'posts' => $author->posts->load('category', 'author')
 //     ]);
 // });
+
+Route::post('/register', [RegisterController::class, 'store']);
