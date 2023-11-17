@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\LoginController;
@@ -47,10 +49,12 @@ Route::get('/categories', function() {
 });
 
 // LOGIN
-Route::get('/login', [LoginController::class, 'index']);
+Route::get('/login', [LoginController::class, 'index'])->name('login')->middleware('guest');
+Route::post('/login', [LoginController::class, 'authenticate']);
+Route::post('/logout', [LoginController::class, 'logout']);
 
 //Register
-Route::get('/register', [RegisterController::class, 'index']);
+Route::get('/register', [RegisterController::class, 'index'])->middleware('guest');
 
 // Route::get('/categories/{category:slug}', function(Category $category) {
 //     return view('category', [
@@ -66,5 +70,7 @@ Route::get('/register', [RegisterController::class, 'index']);
 //         'posts' => $author->posts->load('category', 'author')
 //     ]);
 // });
+
+
 
 Route::post('/register', [RegisterController::class, 'store']);
