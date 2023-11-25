@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
-    use HasFactory;
+    use HasFactory, Sluggable;
 
     protected $fillable = ['title', 'excerpt', 'body']; //ini boleh diisi sisanya gaboleh
 
@@ -49,4 +49,13 @@ class Post extends Model
     {
         return 'slug';
     }
+
+    public function sluggable(): array
+{
+    return [
+        'slug' => [
+            'source' => ['title', 'id']
+        ]
+    ];
+}
 }

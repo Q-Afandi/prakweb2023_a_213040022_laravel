@@ -8,6 +8,8 @@
           </a>
         </li>
         <li class="nav-item">
+          {{-- * sebuah wildcard untuk active link --}}
+          <a class="nav-link link-dark {{ Request::is('dashboard/posts*') ? 'active' : '' }}" href="/dashboard/posts">
           <a class="nav-link link-dark {{ Request::is('dashboard/posts') ? 'active' : '' }}" href="/dashboard/posts">
             <i class="bi bi-file-earmark-text"></i>
             My Posts
