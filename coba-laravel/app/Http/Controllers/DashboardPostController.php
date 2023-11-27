@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use \Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Contracts\Support\ValidatedData;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class DashboardPostController extends Controller
 {
@@ -96,6 +97,13 @@ class DashboardPostController extends Controller
 
         $validatedData = $request->validate($rules);
 
+        if($request->file('image')) {
+            if($request->oldImage) {
+               Storage::delete($request->oldImage);
+            }
+           $validatedData['image'] = $request->file('image')->store('post-images');
+       }
+
 
         $validatedData['user_id'] = auth()->user()->id;
         $validatedData['excerpt'] = Str::limit(strip_tags($request->body), 200);
@@ -111,9 +119,9 @@ class DashboardPostController extends Controller
      */
     public function destroy(Post $post)
     {
-        Post::destroy($post->id);
-
-        return redirect('/dashboard/posts')->with('success', 'Post has been deleted!');
+        if($post->image) {
+            Storage::delete($post->image);
+         }
     }
 
     public function checkSlug(Request $request)
